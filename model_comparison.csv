@@ -1,3 +1,0 @@
-model,params,train_time_sec,test_loss,accuracy,f1_macro,f1_weighted,fps
-baseline_model,111946,140.54,0.9354,0.6703,0.6601,0.6601,16907.05
-fast_model,28394,21.34,1.8926,0.2793,0.2455,0.2455,6932.67
