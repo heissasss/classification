@@ -1,0 +1,7 @@
+.git
+.gitignore
+*.ipynb
+images/
+results/
+__pycache__/
+.venv/

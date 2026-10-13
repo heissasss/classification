@@ -1,4 +1,4 @@
-"""Gradio-приложение для демонстрации классификации изображений моделью CIFAR-10."""
+"""Gradio demo app for CIFAR-10 image classification."""
 
 from __future__ import annotations
 
@@ -15,35 +15,27 @@ model = load_or_create_demo_model(MODEL_PATH)
 
 
 def classify(image: Image.Image) -> Dict[str, float]:
-    """Возвращает вероятности классов для загруженного изображения."""
+    """Return class probabilities for the uploaded image."""
     return predict_image(model, image)
 
 
 description = """
-Загрузите изображение. Модель приведет его к размеру 32x32 и выполнит классификацию по 10 классам CIFAR-10.
+Upload an image. The model resizes it to 32x32 and classifies it into one of the 10 CIFAR-10 classes.
 
-Важно: модель обучена на CIFAR-10, поэтому лучше всего она работает на изображениях, похожих по тематике на классы датасета:
-самолеты, автомобили, птицы, кошки, олени, собаки, лягушки, лошади, корабли и грузовики.
+Note: the model is trained on CIFAR-10, so it works best on images similar to the dataset classes:
+airplanes, automobiles, birds, cats, deer, dogs, frogs, horses, ships and trucks.
 """
 
 with gr.Blocks(title="CNN CIFAR-10 Demo") as demo:
-    gr.Markdown("# CNN классификация изображений — Gradio demo")
+    gr.Markdown("# CNN Image Classification — Gradio Demo")
     gr.Markdown(description)
 
     with gr.Row():
-        image_input = gr.Image(type="pil", label="Загрузите изображение")
-        label_output = gr.Label(num_top_classes=5, label="Предсказания модели")
+        image_input = gr.Image(type="pil", label="Upload an image")
+        label_output = gr.Label(num_top_classes=5, label="Model predictions")
 
-    predict_button = gr.Button("Распознать")
+    predict_button = gr.Button("Classify")
     predict_button.click(fn=classify, inputs=image_input, outputs=label_output)
-
-    gr.Examples(
-        examples=[],
-        inputs=image_input,
-        outputs=label_output,
-        fn=classify,
-        cache_examples=False,
-    )
 
 if __name__ == "__main__":
     demo.launch(server_name="0.0.0.0", server_port=7860)
